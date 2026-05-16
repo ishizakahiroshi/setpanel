@@ -20,3 +20,6 @@ $RECYCLE.BIN/
 
 # Local working notes (plan / bugfix / pending memos)
 docs/local/
+
+# Marketing video (hosted on YouTube; mp4 kept locally only)
+marketing/*.mp4
