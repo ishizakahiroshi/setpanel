@@ -19,7 +19,7 @@ function Show-Welcome {
     Write-Host ' |____/|_____| |_| |_| /_/   \_\_| \_|_____|_____|' -ForegroundColor $logoColor
     Write-Host ''
     Write-Host 'Windows terminal pane launcher' -ForegroundColor Gray
-    Write-Host 'Version: v0.1.0' -ForegroundColor Gray
+    Write-Host 'Version: v0.1.1' -ForegroundColor Gray
     Write-Host ('Runtime: {0}' -f $PSVersionTable.PSEdition) -ForegroundColor Gray
     Write-Host ('Script:  {0}' -f $Setpanel) -ForegroundColor Gray
 }
