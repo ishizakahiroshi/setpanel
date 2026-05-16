@@ -1,0 +1,22 @@
+# Runtime logs
+*.log
+
+# OS metadata
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*~
+
+# Local overrides
+*.local.ps1
+*.local.bat
+
+# Local working notes (plan / bugfix / pending memos)
+docs/local/
