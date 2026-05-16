@@ -1,0 +1,97 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Derive version from tag
+        id: ver
+        run: |
+          tag="${GITHUB_REF_NAME}"
+          version="${tag#v}"
+          echo "tag=$tag"        >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Verify menu version string matches tag
+        run: |
+          expected="Version: ${{ steps.ver.outputs.tag }}"
+          if ! grep -qF "$expected" setpanel-menu.ps1; then
+            echo "::error::setpanel-menu.ps1 does not contain '$expected'. Update the Version line before tagging."
+            grep -n -i 'version' setpanel-menu.ps1 || true
+            exit 1
+          fi
+
+      - name: Stage release files
+        run: |
+          version='${{ steps.ver.outputs.version }}'
+          stage="setpanel-${version}"
+          mkdir -p "$stage"
+          cp setpanel.ps1 setpanel.bat \
+             setpanel-menu.ps1 setpanel-menu.bat \
+             install-shortcuts.ps1 \
+             README.md README.ja.md LICENSE \
+             "$stage/"
+          ls -la "$stage"
+
+      - name: Build zip
+        run: |
+          version='${{ steps.ver.outputs.version }}'
+          zip -qr "setpanel-${version}.zip" "setpanel-${version}"
+          ls -la "setpanel-${version}.zip"
+
+      - name: Generate SHA256SUMS.txt
+        run: |
+          version='${{ steps.ver.outputs.version }}'
+          {
+            sha256sum "setpanel-${version}.zip"
+            find "setpanel-${version}" -type f -print0 \
+              | sort -z \
+              | xargs -0 sha256sum
+          } > SHA256SUMS.txt
+          cat SHA256SUMS.txt
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          version='${{ steps.ver.outputs.version }}'
+          tag='${{ steps.ver.outputs.tag }}'
+
+          notes_file="$(mktemp)"
+          cat > "$notes_file" <<EOF
+          setpanel ${tag} release.
+
+          ## Assets
+
+          - \`setpanel-${version}.zip\` — 配布用 zip（README / LICENSE / 全スクリプト同梱）
+          - \`SHA256SUMS.txt\` — zip および同梱ファイル各々の SHA-256
+
+          ## Verify
+
+          \`\`\`powershell
+          # zip
+          Get-FileHash setpanel-${version}.zip -Algorithm SHA256
+          # 期待値は SHA256SUMS.txt の 1 行目と一致
+          \`\`\`
+
+          ## Install
+
+          [README → Install](https://github.com/${{ github.repository }}#install) を参照。
+          EOF
+
+          gh release create "$tag" \
+            "setpanel-${version}.zip" \
+            "SHA256SUMS.txt" \
+            --title "$tag" \
+            --notes-file "$notes_file" \
+            --generate-notes
