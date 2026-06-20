@@ -21,7 +21,7 @@ $panes = [System.Collections.Generic.List[string]]::new()
 $layoutArgs = [System.Collections.Generic.List[string]]::new()
 $i = 0
 while ($i -lt $ArgList.Count) {
-    $tok = $ArgList[$i]
+    $tok = [string]$ArgList[$i]
     switch ($tok.ToLower()) {
         { $_ -in '-d', '-dir', '-cwd' } {
             $i++
