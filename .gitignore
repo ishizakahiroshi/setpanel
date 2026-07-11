@@ -23,3 +23,14 @@ docs/local/
 
 # Marketing video (hosted on YouTube; mp4 kept locally only)
 marketing/*.mp4
+
+# === ツール生成キャッシュ（アカウント ID 等の識別子を含み得る・追跡しない） ===
+.wrangler/
+.vercel/
+.netlify/
+.firebase/
+.turbo/
+.parcel-cache/
+.terraform/
+.serverless/
+**/supabase/.temp/
