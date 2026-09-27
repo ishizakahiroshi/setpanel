@@ -34,3 +34,6 @@ marketing/*.mp4
 .terraform/
 .serverless/
 **/supabase/.temp/
+
+# Local video production files
+/brag-output/
