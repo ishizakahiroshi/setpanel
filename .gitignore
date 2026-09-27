@@ -20,3 +20,6 @@ $RECYCLE.BIN/
 
 # Local working notes (plan / bugfix / pending memos)
 docs/local/
+
+# Local video production files
+/brag-output/

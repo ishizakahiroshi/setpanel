@@ -1,4 +1,11 @@
 ---
+cover:
+  path: portfolio/overview-2026-09-28.jpg
+  alt: {ja: "setpanel の紹介動画", en: "setpanel overview video"}
+video:
+  provider: youtube
+  id: "79SPwcUnjIo"
+  durationSeconds: 20
 schemaVersion: 1
 color: "#5b6fb0"
 initials: "sp"
