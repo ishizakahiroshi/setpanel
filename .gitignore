@@ -34,3 +34,46 @@ marketing/*.mp4
 .terraform/
 .serverless/
 **/supabase/.temp/
+# === obsidian-link: managed ===
+/docs/obsidian/
+# === /obsidian-link: managed ===
+
+# Local promo video sources and renders
+/brag-output/
+
+# === project-init 推奨の追記（2026-09-28・templates/gitignore から不足分のみ） ===
+*.swo
+*.jsonl
+*.tmp
+*.bak
+*.orig
+*.rej
+.claude/
+.commandcode/
+.cursor/
+.codex-tmp/
+opencode.json*
+.docsweep/
+.env
+.env.*
+!.env.example
+*.local
+*.local.*
+*.local.md
+*.local.json
+scripts/local/
+*.pem
+*.key
+*.p12
+*.pfx
+*.ppk
+id_rsa
+id_dsa
+id_ecdsa
+id_ed25519
+secrets.*
+*.secret.*
+*credential*
+.netrc
+.npmrc
+.pypirc
